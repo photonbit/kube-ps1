@@ -276,11 +276,10 @@ _kubeon_usage() {
   cat <<"EOF"
 Toggle kube-ps1 prompt on
 
-Usage: kubeon [-g | --global] [-h | --help]
+Usage: kubeon [-h | --help]
 
 With no arguments, turn off kube-ps1 status for this shell instance (default).
 
-  -g --global  turn on kube-ps1 status globally
   -h --help    print this message
 EOF
 }
@@ -289,11 +288,10 @@ _kubeoff_usage() {
   cat <<"EOF"
 Toggle kube-ps1 prompt off
 
-Usage: kubeoff [-g | --global] [-h | --help]
+Usage: kubeoff [-h | --help]
 
 With no arguments, turn off kube-ps1 status for this shell instance (default).
 
-  -g --global turn off kube-ps1 status globally
   -h --help   print this message
 EOF
 }
@@ -301,8 +299,6 @@ EOF
 kubeon() {
   if [[ "${1}" == '-h' || "${1}" == '--help' ]]; then
     _kubeon_usage
-  elif [[ "${1}" == '-g' || "${1}" == '--global' ]]; then
-    rm -f -- "${KUBE_PS1_DISABLE_PATH}"
   elif [[ "$#" -ne 0 ]]; then
     echo -e "error: unrecognized flag ${1}\\n"
     _kubeon_usage
@@ -315,9 +311,6 @@ kubeon() {
 kubeoff() {
   if [[ "${1}" == '-h' || "${1}" == '--help' ]]; then
     _kubeoff_usage
-  elif [[ "${1}" == '-g' || "${1}" == '--global' ]]; then
-    mkdir -p -- "$(dirname "${KUBE_PS1_DISABLE_PATH}")"
-    touch -- "${KUBE_PS1_DISABLE_PATH}"
   elif [[ $# -ne 0 ]]; then
     echo "error: unrecognized flag ${1}" >&2
     _kubeoff_usage
